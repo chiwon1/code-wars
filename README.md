@@ -58,9 +58,9 @@ yarn run dev or npm run dev
   - [ ] 제출된 코드로 인한 실행 오류가 발생했을 경우, `failure.ejs` 템플릿을 보여주어야 하고 어떤 오류가 발생했는지 상세히 표기해주어야 합니다.
   - [ ] 그 이외의 서버 내부적인 코드 실행 오류가 발생했을 경우, `/error` 페이지로 사용자를 이동시켜야 합니다.
 
-### 5. GET `/error`
+### 5. Error & Invalid URL
 
-  - [ ] 발생한 문제에 대한 메시지와 함께 `error.ejs` 템플릿을 보여주세요.
+  - [ ] 오류 발생시, 발생한 문제에 대한 메시지와 함께 `error.ejs` 템플릿을 보여주세요.
   - [ ] 유효하지 않은 URL로 들어왔을 경우, 404 Not Found 메시지를 표기해주어야 합니다.
   - [ ] 서버 내부적인 문제가 발생했을 경우, 500 Internal Server Error 메시지를 표기해주어야 합니다. (보안 상의 이유로 사용자에게는 절대 내부 오류에 대한 상세 내용을 보여주어선 안됩니다.)
 
@@ -68,7 +68,6 @@ yarn run dev or npm run dev
 
 * Server Unit Test 작성하기
 * Deploy your Express application
-    * [Microsoft Azure 가이드](/deployment.md)
 * Deploy your MongoDB using cloud services: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/lp/general)
 
 #### Resources
