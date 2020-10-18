@@ -76,3 +76,5 @@ yarn run dev or npm run dev
 - [Unit Testing Express Controller Part 1](https://www.techighness.com/post/unit-testing-expressjs-controller-part-1/)
 - [Unit Testing Express Controller Part 2](https://www.techighness.com/post/unit-testing-expressjs-controller-part-2/)
 - [Deploying Express app to production](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment)
+
+**곧 AWS Cloud Service를 이용하여 서버를 배포하는 방법에 대해 배우게 될테니, 우선 위 링크를 따라해보세요.**
