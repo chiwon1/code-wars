@@ -49,6 +49,7 @@ yarn run dev or npm run dev
 
 #### Resource
 - [CodeMirror](https://github.com/codemirror/CodeMirror): In-browser code editor
+- [How to load codemirror script](https://github.com/azure-code-examples/node-express-web-app) (`/public/assets/js` 참고)
 
 ### 4. POST `/problems/:problem_id`
 
@@ -73,6 +74,7 @@ yarn run dev or npm run dev
 
 #### Resources
 
+- [Real World Node/Express Web Application Example](https://github.com/gothinkster/node-express-realworld-example-app)
 - [Unit Testing Express Controller Part 1](https://www.techighness.com/post/unit-testing-expressjs-controller-part-1/)
 - [Unit Testing Express Controller Part 2](https://www.techighness.com/post/unit-testing-expressjs-controller-part-2/)
 - [Deploying Express app to production](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment)
