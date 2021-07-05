@@ -1,24 +1,32 @@
-![Codewars](/codewars.png)
-
 # Codewars
+
+![Codewars](/codewars.png)
 
 [Codewars](https://codewars.com)와 같이 등록되어 있는 알고리즘 문제를 풀 수 있는 어플리케이션입니다.
 
 ## Setup
 
 ```sh
-yarn install or npm install
+npm install
 ```
 
 ## Development
 
 ```sh
-yarn run dev or npm run dev
+npm run dev
 ```
 
 ## Project Structure
 
 기본적인 과제 프로젝트 구성을 따르되, [Project Structure](https://www.freecodecamp.org/news/how-to-write-a-production-ready-node-and-express-app-f214f0b17d8c/)등 인터넷 자료 혹은 기존 과제의 구조를 참고하여 자유롭게 변경하셔도 됩니다.
+
+## Keep in mind
+
+이번 과제에서는 아래 사안들에 대해 깊게 고민하며 작업하세요.
+
+1. Monolith 구조에 대한 이해
+2. 쿠키 및 세션, JWT 토큰에 대한 이해
+3. 사용자 인증 Flow에 대한 이해
 
 ## TODO
 
@@ -66,17 +74,8 @@ yarn run dev or npm run dev
   - [ ] 유효하지 않은 URL로 들어왔을 경우, 404 Not Found 메시지를 표기해주어야 합니다.
   - [ ] 서버 내부적인 문제가 발생했을 경우, 500 Internal Server Error 메시지를 표기해주어야 합니다. (보안 상의 이유로 사용자에게는 절대 내부 오류에 대한 상세 내용을 보여주어선 안됩니다.)
 
-### 6. Advanced
+## After
 
-* Server Unit Test 작성하기
-* Deploy your Express application
-* Deploy your MongoDB using cloud services: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/lp/general)
-
-#### Resources
-
-- [Real World Node/Express Web Application Example](https://github.com/gothinkster/node-express-realworld-example-app)
-- [Unit Testing Express Controller Part 1](https://www.techighness.com/post/unit-testing-expressjs-controller-part-1/)
-- [Unit Testing Express Controller Part 2](https://www.techighness.com/post/unit-testing-expressjs-controller-part-2/)
-- [Deploying Express app to production](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment)
-
-**곧 AWS Cloud Service를 이용하여 서버를 배포하는 방법에 대해 배우게 될테니, 우선 위 링크를 따라해보세요.**
+1. [데이터 스키마 디자인 챌린지](/assets/schema.md) 해결
+2. 서버 단위 테스트 작성하기
+3. [Heroku 배포하기](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment) + 환경 변수 설정
