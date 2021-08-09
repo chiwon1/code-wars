@@ -40,7 +40,7 @@ npm run dev
 
 #### Resource
 - [Passport Github](https://github.com/jaredhanson/passport-github)
-- [Passport Example](https://github.com/passport/express-4.x-facebook-example/blob/master/server.js)
+- [Passport Example](https://github.com/passport/express-4.x-facebook-example/blob/master/app.js)
 
 ### 2. GET `/`
 
