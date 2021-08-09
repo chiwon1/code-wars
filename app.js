@@ -3,8 +3,11 @@ const path = require("path");
 
 const index = require("./routes/index");
 const login = require("./routes/login");
+const connectMongoDB = require("./config/db");
 
 const app = express();
+
+connectMongoDB();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
