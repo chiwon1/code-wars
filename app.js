@@ -6,6 +6,8 @@ const index = require("./routes/index");
 const register = require("./routes/register");
 const login = require("./routes/login");
 const auth = require("./routes/auth");
+const logout = require("./routes/logout");
+
 const connectMongoDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 
@@ -24,6 +26,7 @@ app.use("/", index);
 app.use("/register", register);
 app.use("/login", login);
 app.use("/auth", auth);
+app.use("/logout", logout);
 // app.use("/problems/", problems);
 
 // catch 404 and forward to error handler
