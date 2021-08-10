@@ -3,6 +3,7 @@ const path = require("path");
 
 const index = require("./routes/index");
 const login = require("./routes/login");
+const register = require("./routes/register");
 const connectMongoDB = require("./config/db");
 
 const app = express();
@@ -13,6 +14,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use("/", index);
+app.use("/register", register);
 app.use("/login", login);
 // app.use("/problems/", problems);
 
