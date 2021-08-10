@@ -12,7 +12,7 @@ router.post("/", (req, res, next) => {
   user.save((err) => {
     if (err) {
       console.log("err", err);
-      return next({ status: 400, message: err });
+      return next({ status: 400, message: "Failed to save user Information" });
     }
 
     return res

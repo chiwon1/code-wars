@@ -31,12 +31,12 @@ userSchema.pre("save", function(next) {
     bcrypt.genSalt(SALT_ROUNDS, function(err, salt) {
       if (err) {
         // correct error status
-        return next({ status: 400, message: "failed to generate salt" });
+        return next({ status: 400, message: "Failed to generate salt" });
       }
 
       bcrypt.hash(user.password, salt, function(err, hash) {
         if (err) {
-          return next({ status: 400, message: "failed to generate bcrypted password" });
+          return next({ status: 400, message: "Failed to generate bcrypted password" });
         }
 
         user.password = hash;
@@ -70,6 +70,20 @@ userSchema.methods.generateToken = function(callback) {
     }
 
     callback(null, user);
+  });
+};
+
+userSchema.statics.findByToken = function(token, callback) {
+  const user = this;
+
+  jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
+    user.findOne({ "_id": decoded, "token": token }, function(err, user) {
+      if (err) {
+        return callback(err);
+      }
+
+      callback(null, user);
+    });
   });
 };
 
