@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-/*
+const SALT_ROUNDS = 10;
 
-  TODO: Fill in the model specification
-
- */
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -23,6 +21,30 @@ const userSchema = new mongoose.Schema({
   },
   token: String,
   tokenExp: Number,
+});
+
+userSchema.pre("save", function(next) {
+  const user = this;
+
+  if (user.isModified("password")) {
+    bcrypt.genSalt(SALT_ROUNDS, function(err, salt) {
+      if (err) {
+        // correct error status
+        return next({ status: 400, message: "failed to generate salt" });
+      }
+
+      bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) {
+          return next({ status: 400, message: "failed to generate bcrypted password" });
+        }
+
+        user.password = hash;
+        next();
+      });
+    });
+  } else {
+    next();
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);
