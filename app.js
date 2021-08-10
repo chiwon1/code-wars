@@ -3,8 +3,9 @@ const path = require("path");
 require("dotenv").config();
 
 const index = require("./routes/index");
-const login = require("./routes/login");
 const register = require("./routes/register");
+const login = require("./routes/login");
+const auth = require("./routes/auth");
 const connectMongoDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/", index);
 app.use("/register", register);
 app.use("/login", login);
+app.use("/auth", auth);
 // app.use("/problems/", problems);
 
 // catch 404 and forward to error handler
