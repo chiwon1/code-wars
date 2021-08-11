@@ -5,11 +5,13 @@ const auth = (req, res, next) => {
 
   User.findByToken(token, (err, user) => {
     if (err) {
+      // return res.redirect(302, "/login");
       next({ status: 400, message: "Invalid token" });
     }
 
     if (user === undefined) {
       return res
+        // .redirect(302, "/login")
         .json({ status: 400, message: "Invalid user" });
     }
 

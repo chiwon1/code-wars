@@ -3,13 +3,15 @@ const path = require("path");
 require("dotenv").config();
 
 const index = require("./routes/index");
-const register = require("./routes/register");
+const signup = require("./routes/signup");
 const login = require("./routes/login");
-const auth = require("./routes/auth");
+// const auth = require("./routes/auth");
 const logout = require("./routes/logout");
 
 const connectMongoDB = require("./config/db");
 const cookieParser = require("cookie-parser");
+
+const auth = require("./routes/middlewares/auth");
 
 const app = express();
 
@@ -22,11 +24,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", index);
-app.use("/register", register);
+app.use("/", auth, index);
+app.use("/signup", signup);
 app.use("/login", login);
-app.use("/auth", auth);
-app.use("/logout", logout);
+// app.use("/auth", auth);
+app.use("/logout", auth, logout);
 // app.use("/problems/", problems);
 
 // catch 404 and forward to error handler

@@ -19,18 +19,21 @@ router.post("/", (req, res, next) => {
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (isMatch === false) {
         return res
-          .json({ loginSuccess: false, message: "Wrong password" });
+          // .json({ loginSuccess: false, message: "Wrong password" })
+          .redirect(302, "/");
       }
 
       user.generateToken((err, user) => {
         if (err) {
-          return next({ status: 400, message: "Failed to generate token" });
+          res.redirect(302, "/");
+          next({ status: 400, message: "Failed to generate token" });
         }
 
         res
           .cookie("x_auth", user.token)
-          .status(200)
-          .json({ loginSuccess: true, userId: user._id });
+          // .status(200)
+          // .json({ loginSuccess: true, userId: user._id })
+          .redirect(302, "/");
       });
     });
   });

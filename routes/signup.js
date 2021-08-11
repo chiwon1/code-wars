@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 
 router.get("/", (req, res, next) => {
-  res.render("register", { title: "바닐라코딩" });
+  res.render("signup", { title: "바닐라코딩" });
 });
 
 router.post("/", (req, res, next) => {
@@ -16,8 +16,9 @@ router.post("/", (req, res, next) => {
     }
 
     return res
-      .status(200)
-      .json({ success: true });
+      // .status(200)
+      // .json({ success: true });
+      .redirect(302, "/login");
   });
 });
 
