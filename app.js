@@ -5,7 +5,6 @@ require("dotenv").config();
 const index = require("./routes/index");
 const signup = require("./routes/signup");
 const login = require("./routes/login");
-// const auth = require("./routes/auth");
 const logout = require("./routes/logout");
 
 const connectMongoDB = require("./config/db");
@@ -24,10 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", auth, index);
 app.use("/signup", signup);
 app.use("/login", login);
-// app.use("/auth", auth);
+app.use("/", auth, index);
 app.use("/logout", auth, logout);
 // app.use("/problems/", problems);
 
