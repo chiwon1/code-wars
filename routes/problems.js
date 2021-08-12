@@ -4,7 +4,8 @@ const Problem = require("../models/Problem");
 const vm = require("vm");
 
 router.get("/:problem_id", async (req, res, next) => {
-  const id = parseInt(req.params.problem_id);
+  const id = req.params.problem_id;
+
   const problem = await Problem.findOne({ id });
 
   res.render("problem", { problem });
@@ -25,7 +26,10 @@ router.post("/:problem_id", async (req, res, next) => {
     try {
       vm.runInNewContext(code, context);
     } catch (err) {
-      return res.render("failure", { type : "compile-error" });
+      return res.render("failure", {
+        type: "compileError",
+        errorCase: testCases[i].code,
+      });
     }
 
     const testResult = context.result === testCases[i].solution;
@@ -43,7 +47,7 @@ router.post("/:problem_id", async (req, res, next) => {
     return res.render("success");
   }
 
-  res.render("failure", { failedTestCases, type: "test-case-error" });
+  res.render("failure", { failedTestCases, type: "testCaseFail" });
 });
 
 module.exports = router;
