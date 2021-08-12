@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const Problem = require("../models/Problem");
 
-/* GET home page. */
-router.get("/", (req, res, next) => {
-  res.render("index", { title: "바닐라코딩" });
+router.get("/", async (req, res, next) => {
+  const problems = await Problem.find({});
+
+  res.render("index", { problems });
 });
 
 module.exports = router;
