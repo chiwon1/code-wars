@@ -27,8 +27,23 @@ router.post("/:problem_id", async (req, res, next) => {
     } catch (err) {
       return;
     }
+
+    const testResult = context.result === testCases[i].solution;
+
+    if (!testResult) {
+      failedTestCases.push({
+        testCase : testCases[i].code,
+        answer: context.result,
+        solution: testCases[i].solution,
+      });
+    }
   }
 
+  if (failedTestCases.length === 0) {
+    return res.render("success");
+  }
+
+  res.render("failure", { failedTestCases, type: "test-case-error" });
 });
 
 module.exports = router;

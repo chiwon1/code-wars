@@ -1,0 +1,14 @@
+<h1>오답입니다.</h1>
+  <% if (type === "compile-error") { %>
+    <p>Compile error</p>
+    <%} else {%>
+    <p>Test case error</p>
+    <% failedTestCases.forEach(function(testCase){ %>
+      <div>
+        <div>Test case: <%= testCase["testCase"] %></div>
+        <div>제출한 값: <%= testCase["answer"] %></div>
+        <div>정답: <%= testCase["solution"] %></div>
+      </div>
+    <% }) %>
+  <%}%>
+<a href="/">목록 페이지로 이동</a>
