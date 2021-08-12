@@ -25,7 +25,7 @@ router.post("/:problem_id", async (req, res, next) => {
     try {
       vm.runInNewContext(code, context);
     } catch (err) {
-      return;
+      return res.render("failure", { type : "compile-error" });
     }
 
     const testResult = context.result === testCases[i].solution;
