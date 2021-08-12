@@ -13,7 +13,7 @@
     <ul class="problems">
       <% problems.forEach(function(problem){ %>
         <div>
-          <a href="/problem/<%= problem.id %>">
+          <a href="/problems/<%= problem.id %>">
             <h4><%= problem.title %></h4>
           </a>
           <span>정답자 수: <%= problem.completed_users %></span>
