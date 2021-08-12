@@ -1,4 +1,4 @@
-const DEFAULT_INPUT = "function solution() {\n  return;\n}";
+const DEFAULT_INPUT = "function solution() {\n // your codes...\n return;\n}";
 
 const textEditor = new CodeMirror.fromTextArea(document.querySelector(".solution-code"), {
   mode: "javascript",
