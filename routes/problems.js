@@ -9,13 +9,18 @@ const Problem = require("../models/Problem");
 
 const {
   ERROR_NOT_FOUND,
-  ERROR_INVALID_SOLUTION_INPUT
+  ERROR_INVALID_PROBLEM_ID,
+  ERROR_INVALID_SOLUTION_INPUT,
 } = require("../constants/errorConstants");
 
 router.get("/:problem_id", async function (req, res, next) {
   const id = req.params.problem_id;
 
-  const problem = await Problem.findOne({ id });
+  if (!mongoose.isValidObjectId(id)) {
+    next(createError(400, ERROR_INVALID_PROBLEM_ID));
+  }
+
+  const problem = await Problem.findById(id);
 
   if (!problem) {
     next(createError(404, ERROR_NOT_FOUND));
@@ -26,7 +31,17 @@ router.get("/:problem_id", async function (req, res, next) {
 
 router.post("/:problem_id", async function (req, res, next) {
   const id = parseInt(req.params.problem_id);
-  const problem = await Problem.findOne({ id });
+
+  if (!mongoose.isValidObjectId(id)) {
+    next(createError(400, ERROR_INVALID_PROBLEM_ID));
+  }
+
+  const problem = await Problem.findById(id);
+
+  if (!problem) {
+    next(createError(404, ERROR_NOT_FOUND));
+  }
+
   const testCases = problem.tests;
   const solution = req.body.solution;
 

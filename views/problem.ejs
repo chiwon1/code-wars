@@ -40,7 +40,7 @@
     <div>문제 레벨: <%= problem.difficulty_level %></div>
     <div>문제 설명: <%= problem.description %></div>
     </ul>
-    <form action="/problems/<%= problem.id %>" method="POST">
+    <form action="/problems/<%= problem._id %>" method="POST">
       <label>
         <h4>Solution Code</h4>
         <textarea name="solution" class="solution-code"></textarea>
