@@ -1,12 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const Problem = require("../models/Problem");
+const mongoose = require("mongoose");
+
 const vm = require("vm");
+const createError = require("http-errors");
+
+const Problem = require("../models/Problem");
+
+const {
+  ERROR_NOT_FOUND,
+  ERROR_INVALID_SOLUTION_INPUT
+} = require("../constants/errorConstants");
 
 router.get("/:problem_id", async function (req, res, next) {
   const id = req.params.problem_id;
 
   const problem = await Problem.findOne({ id });
+
+  if (!problem) {
+    next(createError(404, ERROR_NOT_FOUND));
+  }
 
   res.render("problem", { problem });
 });
@@ -16,6 +29,10 @@ router.post("/:problem_id", async function (req, res, next) {
   const problem = await Problem.findOne({ id });
   const testCases = problem.tests;
   const solution = req.body.solution;
+
+  if (!solution) {
+    throw createError(400, ERROR_INVALID_SOLUTION_INPUT);
+  }
 
   const context = { result: null };
   const failedTestCases = [];

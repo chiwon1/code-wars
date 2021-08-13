@@ -64,7 +64,7 @@ userSchema.statics.findByToken = async function (token) {
 
     return targetUser;
   } catch (err) {
-    return callback(err);
+    next(err);
   }
 };
 

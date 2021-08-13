@@ -1,5 +1,12 @@
-const handleError = function (err, req, res, next) {
-  res.locals.message = err.message;
+const { ERROR_500_SERVER } = require("../../constants/errorConstants");
+
+function handleError(err, req, res, next) {
+  if (!err.status) {
+    res.locals.message = ERROR_500_SERVER;
+  } else {
+    res.locals.message = err.message;
+  }
+
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   res.status(err.status || 500);
