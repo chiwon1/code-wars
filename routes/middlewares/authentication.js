@@ -1,6 +1,6 @@
 const User = require("../../models/User");
 
-const auth = async function (req, res, next) {
+async function authentication(req, res, next) {
   const token = req.cookies.x_auth;
 
   try {
@@ -19,4 +19,4 @@ const auth = async function (req, res, next) {
   }
 };
 
-module.exports = auth;
+module.exports = authentication;

@@ -11,7 +11,7 @@ const problems = require("./routes/problems");
 const connectMongoDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 
-const auth = require("./routes/middlewares/auth");
+const authentication = require("./routes/middlewares/authentication");
 const handleInvalidUrl = require("./routes/middlewares/handleInvalidUrl");
 const handleError = require("./routes/middlewares/handleError");
 
@@ -29,9 +29,9 @@ app.use(cookieParser());
 
 app.use("/signup", signup);
 app.use("/login", login);
-app.use("/", auth, index);
-app.use("/logout", auth, logout);
-app.use("/problems/", auth, problems);
+app.use("/", authentication, index);
+app.use("/logout", authentication, logout);
+app.use("/problems/", authentication, problems);
 
 app.use(handleInvalidUrl);
 app.use(handleError);
