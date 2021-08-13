@@ -38,28 +38,20 @@ userSchema.pre("save", async function(next) {
   }
 });
 
-// userSchema.methods.comparePassword = async function (plainPassword) {
-//   const isMatch = await bcrypt.compare(plainPassword, this.password);
-
-//   return isMatch;
-// };
-
-userSchema.methods.comparePassword = async function (plainPassword, callback) {
+userSchema.methods.comparePassword = async function (plainPassword) {
   const isMatch = await bcrypt.compare(plainPassword, this.password);
 
-  callback(null, isMatch);
+  return isMatch;
 };
 
-userSchema.methods.generateToken = async function (callback) {
+userSchema.methods.generateToken = function () {
   const user = this;
 
   const token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
 
   user.token = token;
 
-  const targetUser = await user.save();
-
-  callback(null, targetUser);
+  user.save();
 };
 
 userSchema.statics.findByToken = async function (token) {

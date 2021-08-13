@@ -14,8 +14,7 @@ router.post("/", function (req, res, next) {
 
     return res.redirect(302, "/login");
   } catch (err) {
-
-    return next({ status: 400, message: "Failed to save user Information" });
+    return next(err);
   }
 });
 

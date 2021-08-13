@@ -12,9 +12,10 @@ const auth = async function (req, res, next) {
 
     req.user = targetUser;
     req.token = token;
+
     next();
   } catch (err) {
-    return res.redirect(302, "/login");
+    next(err);
   }
 };
 
