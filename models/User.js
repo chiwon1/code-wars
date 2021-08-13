@@ -17,74 +17,63 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    minlength: 5,
     required: true,
   },
   token: String,
   tokenExp: Number,
 });
 
-userSchema.pre("save", function(next) {
+userSchema.pre("save", async function(next) {
   const user = this;
 
   if (user.isModified("password")) {
-    bcrypt.genSalt(SALT_ROUNDS, function(err, salt) {
-      if (err) {
-        // correct error status
-        return next({ status: 400, message: "Failed to generate salt" });
-      }
+    const salt = await bcrypt.genSalt(SALT_ROUNDS);
 
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) {
-          return next({ status: 400, message: "Failed to generate bcrypted password" });
-        }
+    const hash = await bcrypt.hash(user.password, salt);
 
-        user.password = hash;
-        next();
-      });
-    });
+    user.password = hash;
+    next();
   } else {
     next();
   }
 });
 
-userSchema.methods.comparePassword = function(plainPassword, callback) {
-  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
-    if (err) {
-      return callback(err);
-    }
+// userSchema.methods.comparePassword = async function (plainPassword) {
+//   const isMatch = await bcrypt.compare(plainPassword, this.password);
 
-    callback(null, isMatch);
-  });
+//   return isMatch;
+// };
+
+userSchema.methods.comparePassword = async function (plainPassword, callback) {
+  const isMatch = await bcrypt.compare(plainPassword, this.password);
+
+  callback(null, isMatch);
 };
 
-userSchema.methods.generateToken = function(callback) {
+userSchema.methods.generateToken = async function (callback) {
   const user = this;
 
   const token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
 
   user.token = token;
-  user.save(function(err, user) {
-    if (err) {
-      return callback(err);
-    }
 
-    callback(null, user);
-  });
+  const targetUser = await user.save();
+
+  callback(null, targetUser);
 };
 
-userSchema.statics.findByToken = function(token, callback) {
+userSchema.statics.findByToken = async function (token) {
   const user = this;
 
-  jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
-    user.findOne({ "_id": decoded, "token": token }, function(err, user) {
-      if (err) {
-        return callback(err);
-      }
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-      callback(null, user);
-    });
-  });
+  try {
+    const targetUser = await user.findOne({ "_id": decoded, "token": token });
+
+    return targetUser;
+  } catch (err) {
+    return callback(err);
+  }
 };
 
 module.exports = mongoose.model("User", userSchema);

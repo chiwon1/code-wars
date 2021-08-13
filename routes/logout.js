@@ -1,19 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("./middlewares/auth");
 const User = require("../models/User");
 
-router.get("/", auth, (req, res, next) => {
-  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err) => {
-    if (err) {
-      return next({ status: 400, message: "Failed to find the user" });
-    }
+router.get("/", async function (req, res, next) {
+  await User.findOneAndUpdate({ _id: req.user._id }, { token: "" });
 
-    return res
-      // .status(200)
-      // .send({ success: true });
-      .redirect(302, "/login");
-  });
+  return res.redirect(302, "/login");
 });
 
 module.exports = router;

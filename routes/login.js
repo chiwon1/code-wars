@@ -2,39 +2,40 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 
-router.get("/", (req, res, next) => {
+router.get("/", function (req, res, next) {
   res.render("login", { title: "바닐라코딩" });
 });
 
-router.post("/", (req, res, next) => {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (user === undefined) {
-      return res
+router.post("/", async function (req, res, next) {
+  const targetUser = await User.findOne({ email: req.body.email });
+
+  if (!targetUser) {
+    return res
         .json({
           loginSuccess: false,
           message: "Invalid email",
-        });
+      });
+  }
+
+  // 아래 부분 async await 이용하여 변경필요
+  targetUser.comparePassword(req.body.password, function (err, isMatch) {
+    if (isMatch === false) {
+      return res
+        .json({
+          loginSuccess: false,
+          message: "Wrong password",
+      });
     }
 
-    user.comparePassword(req.body.password, (err, isMatch) => {
-      if (isMatch === false) {
-        return res
-          // .json({ loginSuccess: false, message: "Wrong password" })
-          .redirect(302, "/");
+    targetUser.generateToken(function (err, user) {
+      if (err) {
+        res.redirect(302, "/");
+        next({ status: 400, message: "Failed to generate token" });
       }
 
-      user.generateToken((err, user) => {
-        if (err) {
-          res.redirect(302, "/");
-          next({ status: 400, message: "Failed to generate token" });
-        }
-
-        res
-          .cookie("x_auth", user.token)
-          // .status(200)
-          // .json({ loginSuccess: true, userId: user._id })
-          .redirect(302, "/");
-      });
+      res
+        .cookie("x_auth", user.token)
+        .redirect(302, "/");
     });
   });
 });

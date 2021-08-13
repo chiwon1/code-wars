@@ -1,21 +1,21 @@
 const User = require("../../models/User");
 
-const auth = (req, res, next) => {
+const auth = async function (req, res, next) {
   const token = req.cookies.x_auth;
 
-  User.findByToken(token, (err, user) => {
-    if (err) {
+  try {
+    const targetUser = await User.findByToken(token);
+
+    if (!targetUser) {
       return res.redirect(302, "/login");
     }
 
-    if (!user) {
-      return res.redirect(302, "/login");
-    }
-
+    req.user = targetUser;
     req.token = token;
-    req.user = user;
     next();
-  });
+  } catch (err) {
+    return res.redirect(302, "/login");
+  }
 };
 
 module.exports = auth;
