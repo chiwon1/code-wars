@@ -3,6 +3,10 @@ const User = require("../../models/User");
 async function authentication(req, res, next) {
   const token = req.cookies.x_auth;
 
+  if (!token) {
+    return res.redirect(302, "/login");
+  }
+
   try {
     const targetUser = await User.findByToken(token);
 
