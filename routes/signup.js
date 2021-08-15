@@ -30,7 +30,7 @@ router.post("/", function (req, res, next) {
 
     user.save();
 
-    return res.redirect(302, "/login");
+    res.redirect(302, "/login");
   } catch (err) {
     if (err.name === "MongoError" && err.code === 11000) {
       return next(createError(400, ERROR_DUPLICATE_EMAIL));

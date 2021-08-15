@@ -21,7 +21,7 @@ router.post("/", async function (req, res, next) {
 
     const isMatch = await targetUser.comparePassword(req.body.password);
 
-    if (isMatch === false) {
+    if (!isMatch) {
       throw createError(401, ERROR_WRONG_PASSWORD);
     }
 

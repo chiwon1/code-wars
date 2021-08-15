@@ -26,7 +26,6 @@ userSchema.pre("save", async function(next) {
 
   if (user.isModified("password")) {
     const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
-
     const hash = await bcrypt.hash(user.password, salt);
 
     user.password = hash;
@@ -44,23 +43,19 @@ userSchema.methods.comparePassword = async function (plainPassword) {
 
 userSchema.methods.generateToken = function () {
   const user = this;
-
   const token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
 
   user.token = token;
-
   user.save();
 };
 
 userSchema.statics.findByToken = async function (token) {
   const user = this;
 
-  const decoded = jwt.verify(token, process.env.SECRET_KEY);
-
   try {
-    const targetUser = await user.findOne({ "_id": decoded, "token": token });
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-    return targetUser;
+    return await user.findOne({ "_id": decoded, "token": token });
   } catch (err) {
     next(err);
   }
