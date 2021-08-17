@@ -12,7 +12,10 @@ function handleError(err, req, res, next) {
   res.status(err.status || 500);
 
   if (req.headers["content-type"] === "application/json") {
-    res.json({ error: res.locals.message });
+    res.json({
+      error: req.app.get("env") === 'development' ? res.locals.message : ERROR_500_SERVER
+    });
+
   } else {
     res.render("error");
   }

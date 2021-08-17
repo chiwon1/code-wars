@@ -7,7 +7,7 @@ const User = require("../models/User");
 const { ERROR_INVALID_SIGNUP_INPUT, ERROR_DUPLICATE_EMAIL } = require("../constants/errorConstants");
 
 router.get("/", function (req, res, next) {
-  res.render("signup", { title: "바닐라코딩" });
+  res.render("signup");
 });
 
 router.post("/", function (req, res, next) {

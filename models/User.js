@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const SALT_ROUNDS = 10;
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -27,7 +25,7 @@ userSchema.pre("save", async function(next) {
   const user = this;
 
   if (user.isModified("password")) {
-    const salt = await bcrypt.genSalt(SALT_ROUNDS);
+    const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
 
     const hash = await bcrypt.hash(user.password, salt);
 

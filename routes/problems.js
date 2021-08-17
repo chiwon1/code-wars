@@ -30,7 +30,7 @@ router.get("/:problem_id", async function (req, res, next) {
 });
 
 router.post("/:problem_id", async function (req, res, next) {
-  const id = parseInt(req.params.problem_id);
+  const id = req.params.problem_id;
 
   if (!mongoose.isValidObjectId(id)) {
     next(createError(400, ERROR_INVALID_PROBLEM_ID));

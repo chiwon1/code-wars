@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 function connectMongoDB() {
-  mongoose.connect(`${process.env.DB_HOST}`, {
+  mongoose.connect(process.env.DB_HOST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
