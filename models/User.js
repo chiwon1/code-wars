@@ -22,40 +22,32 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function(next) {
-  const user = this;
-
-  if (user.isModified("password")) {
+  if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
-    const hash = await bcrypt.hash(user.password, salt);
+    const hash = await bcrypt.hash(this.password, salt);
 
-    user.password = hash;
-    next();
-  } else {
-    next();
+    this.password = hash;
   }
+
+  next();
 });
 
 userSchema.methods.comparePassword = async function (plainPassword) {
-  const isMatch = await bcrypt.compare(plainPassword, this.password);
-
-  return isMatch;
+  return await bcrypt.compare(plainPassword, this.password);
 };
 
 userSchema.methods.generateToken = function () {
-  const user = this;
-  const token = jwt.sign(user._id.toHexString(), process.env.SECRET_KEY);
+  const token = jwt.sign(this._id.toHexString(), process.env.SECRET_KEY);
 
-  user.token = token;
-  user.save();
+  this.token = token;
+  this.save();
 };
 
 userSchema.statics.findByToken = async function (token) {
-  const user = this;
-
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-    return await user.findOne({ "_id": decoded, "token": token });
+    return await this.findOne({ "_id": decoded, "token": token });
   } catch (err) {
     next(err);
   }
